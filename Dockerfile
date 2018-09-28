@@ -1,7 +1,20 @@
-FROM node:6.9.1-wheezy
+FROM debian:jessie
 
-RUN apt-get update && apt-get upgrade -y
+ENV DEBIAN_FRONTEND noninteractive
 
-RUN npm install -g gulp gulp-cli bower yarn
+RUN apt-get update && apt-get upgrade -y \
+	curl \
+	wget \
+	git \
+	build-essential
 
-WORKDIR /home/apps
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash
+
+RUN apt-get update && apt-get upgrade -y \
+	nodejs	
+
+RUN npm i npm@latest -g
+
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+
+WORKDIR /var/www
